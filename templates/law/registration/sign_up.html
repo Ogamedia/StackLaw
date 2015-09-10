@@ -1,0 +1,17 @@
+{% extends "base_template.html" %}
+
+{% block  page_body %}
+    {% if form.errors %}
+            <p>User name not defined</p>
+    {% endif %}  
+
+    <form action="/accounts/auth" method="post">{%  csrf_token %}
+        <label for="username">User Name: </label>
+        <input type="text" name="username" value=" " id="username" />
+        <label for="password">Password</label>
+        <input type="password" name="password" value="" id="password">
+        
+        <input type="submit" value="login">
+    </form>  
+
+{% endblock %}
