@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404, render_to_response
+from django.shortcuts import render, render_to_response
 from django.views import generic
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib import auth
 from django.core.context_processors import csrf
@@ -8,12 +8,13 @@ from django.core.context_processors import csrf
 
 # Create your views here.
 def index(request):
-    return render(request, 'law/index.html')
+    user = request.user.username
+    return render_to_response('law/index.html', {'username': user})
 
 def login(request):
     c = {}
     c.update(csrf(request))
-    render_to_response('login.html', c)
+    return render_to_response('law/registration/login.html', c)
 
 def auth_view(request):
     username = request.POST.get('username', ' ')
@@ -21,7 +22,7 @@ def auth_view(request):
     user = auth.authenticate(username = username, password = password)
     
     if user is not None:
-        auth.login(requests, user)
-        return HttpResponseRedirect('law/index')
+        auth.login(request, user)
+        return HttpResponseRedirect(reverse('law:index'))
     else:
-        return HttpResponseRedirect('law/registration/auth.html')
+        return render(request, 'law/registration/auth.html')
