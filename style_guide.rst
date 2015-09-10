@@ -1,0 +1,2 @@
+- Use Django style guide
+- Comment code appropriately
