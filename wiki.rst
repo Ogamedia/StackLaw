@@ -1,5 +1,5 @@
 Stack Law Wiki
-=============
+==============
 
 This wiki explains the technical specification of the project.
 
@@ -28,3 +28,9 @@ TODO
 - Email Template
 - Chat room
 - Messaging back end
+
+
+Contribution
+=============
+
+- clone repository and make pull request
