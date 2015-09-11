@@ -2,11 +2,16 @@
 
 
 {% block page_title %}
-    Documents
+    Index
 {% endblock page_title %}
 
+
 {% block page_body %}
-   Lorem is the way
-   UserName {{ username }}
+   {{ user.username  }} <br>
+
+        <a href="#"><button type="button" class="btn btn-lg btn-success">Create Contract</button></a>
+        <a href="{% url "law:review" %}"><button type="button" class="btn btn-lg btn-warning">Review Contract</button></a>
+        <button type="button" class="btn btn-lg btn-primary">Ask a lawyer</button>
+
 {% endblock page_body %}
 

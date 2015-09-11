@@ -1,16 +1,21 @@
 {% extends "law/base_template.html" %}
 
+{% block page_title %}
+    Login
+{% endblock page_title %}
+
 {% block  page_body %}
+
     {% if form.errors %}
             <p>User name not defined</p>
     {% endif %}  
 
 
     <form action="{% url 'law:auth' %}" method="post">{%  csrf_token %}
-        <label for="username">UserName: </label>
-        <input type="text" name="username" value="" id="username" />
-        <label for="password">Password</label>
-        <input type="password" name="password" value="" id="password">
+        <label for="username">UserName: </label> <br>
+        <input type="text" name="username" value="" id="username" /><br>
+        <label for="password">Password</label><br>
+        <input type="password" name="password" value="" id="password"><br>
         
         <input type="submit" value="login">
     </form>  

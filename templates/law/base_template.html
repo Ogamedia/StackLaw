@@ -6,15 +6,14 @@
 <head>
     <meta charset="utf-8">  
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />    
-    <title>Stack Law Web | {% block page_title %} {% endblock page_title %}</title>
+    <title> Stack Law Web | {% block page_title %} {% endblock page_title %}</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="law/lib/images/favicon.png">
     <meta name="description" content="Simple - Responsive Landing Page Template">
     <meta name="author" content="Simple - Responsive Landing Page Template">
     
     <link rel="stylesheet" href="{% static 'law/lib/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'law/lib/css/bootstrap.min.css' %}">
-    <script type="text/javascript" href="{% static 'law/lib/js/bootstrap.min.js' %}"></script>
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
     
 
 
@@ -26,6 +25,7 @@
 </head>
 
 <body><!-- Latest compiled and minified JavaScript -->
+
         <!--begin container -->
     <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -37,16 +37,26 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <a class="navbar-brand" href="{% url "law:index" %}"><i class="fa fa-balance-scale"></i>Law</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
-        s
-      </sul>
+        <li class=""><a href="#"><i class="fa fa-edit" style="color:green"></i>  Create</a> <span class="sr-only">(current)</span></a></li>
+        <li><a href="{% url "law:review" %}"><i class="fa fa-folder-open" style="color:red"></i>  Review</a></li>
+
+        {% if user.is_authenticated %}
+              <li><a href="{% url "law:logout" %}">Log out</a></li>
+        {% else %}
+            {% if page_title == "Login" %}
+                
+            {% else %} 
+              <li><a href="{% url "law:login" %}">Please Login</a></li>
+            {% endif %}
+        {% endif %}
+        
+      </ul>
       
     
     </div><!-- /.navbar-collapse -->
@@ -54,10 +64,11 @@
 </nav>
 
     <!-- body -->
-    <div id="containers">
+    <div class="container">
         {% block page_body %} {% endblock page_body %}
     </div>
 
-
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    
 </body>
 </html>
