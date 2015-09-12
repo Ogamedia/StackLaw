@@ -1,9 +1,11 @@
+#import statements
+from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
-from django.core import send_mail
-from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.views import generic
 from forms import RegistrationForm, ReviewRequestForm
@@ -23,7 +25,7 @@ def review_requests(request):
         form = ReviewRequestForm(request.POST)
         if form.is_valid():
             form.save()
-
+            
             return HttpResponseRedirect(reverse('law:index'))
     
     else:
@@ -68,6 +70,12 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
+            subject = 'Confirm Registration'
+            message = "Hi, /n Confirm your email address with the following"
+            from_email = settings.EMAIL_HOST_USER
+            to_email = [settings.EMAIL_HOST_USER]
+            send_mail(subject, message, from_email, to_email, fail_silently=True)
+
             return HttpResponseRedirect(reverse('law:register_success'))
         else:
             return render(request, 'law/registration/auth.html')
