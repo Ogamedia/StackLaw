@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.contrib import auth
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
 
 
 # Create your views here.
@@ -35,3 +36,19 @@ def logout(request):
 @login_required(redirect_field_name='', login_url='law:login')
 def review_contract(request):
     return render(request, 'law/review_contract.html')
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('law:register_success'))
+    
+    args = {}
+    args.update(csrf(request))
+    args['form'] = UserCreationForm()
+
+    return render_to_response('law/registration/register.html', args) 
+
+def register_success(request):
+    return render_to_response('law/index.html')

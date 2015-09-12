@@ -1,0 +1,14 @@
+{% extends "law/base_template.html" %}
+
+{% block page_title %}
+    Register
+{% endblock page_title %}
+
+{% block  page_body %}
+ 
+    <form action="{% url 'law:register' %}" method="post"> {%  csrf_token %}
+        {{form}}
+        <input type="submit" value="Register">
+    </form>  
+
+{% endblock %}
