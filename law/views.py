@@ -1,11 +1,17 @@
-from django.shortcuts import render, render_to_response
-from django.views import generic
+from django.contrib import auth
+from django.contrib.auth.decorators import login_required
+from django.core.context_processors import csrf
+from django.core import send_mail
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.contrib import auth
-from django.core.context_processors import csrf
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, render_to_response
+from django.views import generic
 from forms import RegistrationForm, ReviewRequestForm
+
+#python first
+#django second
+#your apps
+#local
 
 # Create your views here.
 def index(request):
