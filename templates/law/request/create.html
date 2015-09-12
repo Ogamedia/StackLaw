@@ -1,0 +1,23 @@
+{% extends "law/base_template.html" %}
+
+
+{% block page_title %}
+    Create
+{% endblock page_title %}
+{% url 'law:auth' %}
+
+{% block page_body %}
+   
+    <form action="{% url "law:requests" %}" method="post">
+    {% csrf_token %}
+{{form.description.errors}}
+           <ul>
+            <li><label for="id_description">Description:</label> <textarea cols="40" id="id_description" maxlength="400" name="description" rows="10"></textarea></li>
+<li><label for="id_body" class="">Body:</label> <textarea cols="20" id="id_body" name="body" rows="10"></textarea></li>
+        </ul>
+         <input  type="submit" name="submit" value="Create Request">
+    </form>
+    
+   
+{% endblock %}
+

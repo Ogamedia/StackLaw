@@ -5,14 +5,34 @@ from django.core.urlresolvers import reverse
 from django.contrib import auth
 from django.core.context_processors import csrf
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
-
+from forms import RegistrationForm, ReviewRequestForm
 
 # Create your views here.
 def index(request):
     user = request.user
     return render_to_response('law/index.html', {'user': user})
 
+def review_requests(request):
+    if request.POST:
+        form = ReviewRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect(reverse('law:index'))
+    
+    else:
+        form = ReviewRequestForm()
+    
+    args = {}
+    args.update(csrf(request))
+    args['form'] = form
+
+    return render_to_response('law/request/create.html' ,args)
+
+# def review_requests(request):
+#     pass
+
+# ================== authorisation ======================
 def login(request):
     c = {}
     c.update(csrf(request))
@@ -39,16 +59,20 @@ def review_contract(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('law:register_success'))
+        else:
+            return render(request, 'law/registration/auth.html')
     
     args = {}
     args.update(csrf(request))
-    args['form'] = UserCreationForm()
+    args['form'] = RegistrationForm()
 
     return render_to_response('law/registration/register.html', args) 
 
 def register_success(request):
     return render_to_response('law/index.html')
+
+
