@@ -11,7 +11,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views import generic
 from django.template import RequestContext
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.models import User
 
@@ -112,5 +112,19 @@ def register(request):
 
 def register_success(request):
     return render_to_response('law/index.html')
+
+def register_confirm(request, activation_key):
+    if request.user.is_authenticated(): #if user is already logged in 
+        HttpResponseRedirect(reverse('law:index'))
+    
+    user_profile = get_object_or_404(UserProfile, activation_key=activation_key) # check if the user profile exist
+    
+    if user_profile.key_expires < timezone.now():
+        return render_to_response('law/registration/confirm_expired.html')
+    
+    user = user_profile.username
+    user.is_active = True
+    user.save()
+    return render_to_response('law/registration/confirmation_email.html')
 
 

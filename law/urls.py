@@ -8,10 +8,9 @@ urlpatterns = [
     url(r'^review/$', views.review_contract, name='review'),
     url(r'^requests/$', views.review_requests, name='requests'),
     # url(r'^create/$', views.create_contract, name='create'),
-    
+    url(r'^accounts/confirm/(?P<activation_key>\w+)/$', views.register_confirm, name='confirmed'),
     url(r'^accounts/logout/$', views.logout, name='logout'),
     url(r'^accounts/auth/$', views.auth_view, name='auth'),
     url(r'^accounts/register/$', views.register, name='register'),
     url(r'^accounts/register_success/$', views.register_success, name='register_success'),
-    
 ]
