@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 # Create your models here.
 class ReviewRequest(models.Model):
@@ -15,8 +16,8 @@ class ReviewRequest(models.Model):
 class UserProfile(models.Model):
     """docstring for UserProfile"""
     user = models.OneToOneField(User)
-    activation_key = models.Charfield(max_length=40, blank=True)
-    key_expires = models.DateTimeField(default-datetime.date.today())
+    activation_key = models.CharField(max_length=40, blank=True)
+    key_expires = models.DateTimeField(auto_now_add=True)
     
     def __unicode__(self):
         return self.user.username
