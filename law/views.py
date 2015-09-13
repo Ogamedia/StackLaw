@@ -6,11 +6,12 @@ from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.context_processors import csrf
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views import generic
-from django.template import RequestContext
+from django.template.loader import get_template
+from django.template import RequestContext, Context
 from django.shortcuts import render, render_to_response, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -94,14 +95,20 @@ def register(request):
             new_profile = UserProfile(user = user, activation_key = activation_key, key_expires = key_expires)
             new_profile.save()
             # email starts here
-            subject = 'Confirm Registration'
-            message = "Hi, %s Thanks for signing up. Activate you account by clicking this link within 48 hours. http://127.0.0.1:8000/law/%s Confirm your email address with the following" % (username, activation_key)
-            msg = "Hey %s, thanks for signing up. To activate your account, click this link within \
-            48hours http://127.0.0.1:8000/law/accounts/confirm/%s" % (username, activation_key)
+            template = get_template('law/email/confirmation.html')
+            context = Context({'username': username, 'activation_key': activation_key })            
+            content = template.render(context)
 
+            subject = 'Confirm Registration'
+            message = "Hey %s, thanks for signing up. To activate your account, click this link within \
+            48hours http://127.0.0.1:8000/law/accounts/confirm/%s" % (username, activation_key)
             from_email = settings.EMAIL_HOST_USER
-            to_email = [settings.EMAIL_HOST_USER]
-            send_mail(subject, msg, from_email, to_email, fail_silently=True)
+            to_email = [settings.EMAIL_HOST_USER, email]
+            
+            msg = EmailMessage(subject, content, from_email, to_email)
+            msg.content_subtype = 'html'   
+            msg.send()
+            # send_mail(subject, msg, from_email, to_email, fail_silently=True)
 
             return HttpResponseRedirect(reverse('law:register_success'))
         else:
