@@ -1,0 +1,21 @@
+.create {
+    /*background-color: yellow;*/
+}
+
+
+.review {
+    /*background-color: pink;*/
+}
+
+
+
+.ask {
+    /*background-color: green;*/
+}
+
+
+
+/*override bootstrap*/
+.navbar {
+    margin-bottom: 3px;
+}

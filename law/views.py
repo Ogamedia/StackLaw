@@ -96,7 +96,7 @@ def register(request):
             new_profile.save()
             # email starts here
             template = get_template('law/email/confirmation.html')
-            context = Context({'username': username, 'activation_key': activation_key })            
+            context = Context({'username': username, 'user_email': email, 'activation_key': activation_key })            
             content = template.render(context)
 
             subject = 'Confirm Registration'

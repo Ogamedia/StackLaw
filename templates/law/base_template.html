@@ -12,10 +12,10 @@
     <meta name="description" content="Simple - Responsive Landing Page Template">
     <meta name="author" content="Simple - Responsive Landing Page Template">
     
-    <link rel="stylesheet" href="{% static 'law/lib/css/style.css' %}">
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
     
-
+    <link rel="stylesheet" href="{% static 'law/lib/css/style.css' %}">
+    
 
     <!-- 1140px Grid styles for IE -->
     <!--[if lte IE 9]><link rel="stylesheet" href="law/lib/css/ie.css" type="text/css" media="screen" /><![endif]-->
@@ -47,6 +47,7 @@
         <li><a href="{% url "law:review" %}"><i class="fa fa-folder-open" style="color:red"></i>  Review</a></li>
 
         {% if user.is_authenticated %}
+            <li><a href="#"><i class="fa fa-user"></i> {{user.email}}</a></li>
               <li><a href="{% url "law:logout" %}">Log out</a></li>
         {% else %}
             {% if page_title == "Login" %}
@@ -64,9 +65,7 @@
 </nav>
 
     <!-- body -->
-    <div class="container">
         {% block page_body %} {% endblock page_body %}
-    </div>
 
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     

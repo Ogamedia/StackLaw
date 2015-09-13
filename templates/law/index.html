@@ -7,11 +7,28 @@
 
 
 {% block page_body %}
-   {{ user.username  }} <br>
+    
+    <div class="">
+        <div class=" create col-lg-4 col-md-4">
+            <a href="#"><button type="button" class="btn btn-lg btn-success"><i class="fa fa-edit fa-5x"></i>Create Contract</button></a>
+        </div>
+        
+        <div class="review col-lg-4 col-md-4">
+            <a href="{% url "law:review" %}"><button type="button" class="btn btn-lg btn-warning"><i class="fa fa-file-text fa-4x"></i> Review Contract</button></a>
+        </div>
 
-        <a href="#"><button type="button" class="btn btn-lg btn-success">Create Contract</button></a>
-        <a href="{% url "law:review" %}"><button type="button" class="btn btn-lg btn-warning">Review Contract</button></a>
-        <button type="button" class="btn btn-lg btn-primary">Ask a lawyer</button>
+        <div class="ask col-lg-4 col-md-4">
+            <button type="button" class="btn btn-lg btn-primary">Ask a lawyer</button>
+        </div>
+
+    </div>
+    
+    
+        
+        
+        
+
+
+
 
 {% endblock page_body %}
-
