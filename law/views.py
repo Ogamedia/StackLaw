@@ -122,7 +122,7 @@ def register_confirm(request, activation_key):
     if user_profile.key_expires < timezone.now():
         return render_to_response('law/registration/confirm_expired.html')
     
-    user = user_profile.username
+    user = user_profile.user
     user.is_active = True
     user.save()
     return render_to_response('law/registration/confirmation_email.html')
