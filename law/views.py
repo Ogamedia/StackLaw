@@ -71,7 +71,7 @@ def register(request):
         if form.is_valid():
             form.save()
             subject = 'Confirm Registration'
-            message = "Hi, /n Confirm your email address with the following"
+            message = "Hi,/n Confirm your email address with the following"
             from_email = settings.EMAIL_HOST_USER
             to_email = [settings.EMAIL_HOST_USER]
             send_mail(subject, message, from_email, to_email, fail_silently=True)

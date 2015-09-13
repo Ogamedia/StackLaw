@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from models import ReviewRequest
 
 class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+    email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder':'company@email.com'}))
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)
     phone_number = forms.CharField(required=True)
@@ -25,9 +25,18 @@ class RegistrationForm(UserCreationForm):
         user.phone_number = self.cleaned_data['phone_number']
         
         if commit:
+            user.is_active = False
             user.save()
     
         return user
+    
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        try:
+            User._default_manager.get(email=email)
+        except User.DoesNotExist:
+            return email
+        raise forms.ValidationError('duplicate email')
 
 
 class ReviewRequestForm(forms.ModelForm):
